@@ -1,7 +1,7 @@
 /* global attributeNumber */
 
 let tablas = [];
-
+var attributesNoRepetition  = new Array(0);
 
 function showInputTable() {
     $(".modal").addClass("is-active");
@@ -17,7 +17,11 @@ function agregarTabla() {
     for (var i = 1; i <= attributeNumber; i++) {
         $("#tables").append("<div>" + $("#nombreA" + i).val() + " " + $("#dataType" + i).val() + " (" + $("#sizeData" + i).val() + ")</div>");
         array.push($("#nombreA" + i).val());
+        
+        if(attributesNoRepetition.indexOf($("#nombreA" + i).val().toString())===-1)
+            attributesNoRepetition.push($("#nombreA" + i).val());
     }
     $("#tables").append("<hr/>");
     tablas.push({'nombre':$("#nombreT").val(), 'atributos':[array]});
+    limpiarTablero();
 }

@@ -1,9 +1,15 @@
+<%-- 
+    Document   : index
+    Created on : 24/11/2019, 10:33:07 PM
+    Author     : MedinaVilla
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+<%        
+    String query = request.getParameter("query");
+    
+%>
 <html>
     <head>
         <title>SQL</title>
@@ -12,9 +18,9 @@ and open the template in the editor.
         <link rel="stylesheet" href="./css/bulma.css" type="text/css"/>
         <link rel="icon" href="img/sql.jpg" type="image/icon type">
         <script src="./js/jquery.min.js"></script>
-        <script type="text/javascript" src="./js/tableR.js?newversion"></script>
-        <script type="text/javascript" src="./js/commands.js?3"></script>
-         <script type="text/javascript" src="./js/attribute.js?newversion"></script>
+        <script type="text/javascript" src="./js/tableR.js?2"></script>
+        <script type="text/javascript" src="./js/commands.js?9"></script>
+        <script type="text/javascript" src="./js/attribute.js?2"></script>
     </head>
     <body>
         <section class="hero is-primary">
@@ -33,9 +39,8 @@ and open the template in the editor.
         <div class="columns">
             <aside class="column is-one-fifth">
                 <div class="menu">
-
                     <p class="menu-label">
-                        Componentes
+                        &nbsp; Componentes
                     </p>
                     <ul class="menu-list">
                         <li>
@@ -45,7 +50,7 @@ and open the template in the editor.
                             <br/>
                             <button onclick="whereHandler();" class="button is-fullwidth"><center>where</center></button>
                             <br/>
-                            <button onclick="notHandler();" class="button is-fullwidth"><center>not</center></button>
+                            <button onclick="notHandler();" class="button is-fullwidth"><center>not in</center></button>
                             <br/>
                             <button onclick="inHandler();" class="button is-fullwidth"><center>in</center></button>
                         </li>
@@ -56,9 +61,9 @@ and open the template in the editor.
                 <nav class="level">
                     <!-- Left side -->
                     <div class="level-left">
-                        <div class="level-item">
+                        <div id="buttonsAction" class="level-item">
                             <button onclick="limpiarTablero();" class="button is-danger"><strong>Limpiar</strong>&nbsp;tablero</button>&nbsp;
-                            <button class="button is-success" type="submit"><strong>Verificar</strong>&nbsp;sentencia</button>
+                            <button onclick="getQuery();" class="button is-success" type="submit"><strong>Verificar</strong>&nbsp;sentencia</button>&nbsp;
                         </div>
                     </div>
 
@@ -67,8 +72,9 @@ and open the template in the editor.
                     </div>
                 </nav>
                 <div id="boxSQL" name="boxSQL" class="box">
+                    <form action="#" method="post">
                     <!--<select style="display:none;" id='attributeTS' name='attributeTS'></select>-->
-
+                    </form>
                 </div>
             </div>
             <div class="column is-one-fifth">
@@ -90,29 +96,30 @@ and open the template in the editor.
                             <input id="nombreT" name="nombreT" class="input" type="text" placeholder="Tabla">
                         </div>
 
-                    <div class="field">
-                        <label class="label">Atributos <small>*Si no es necesario, dejar en blanco</small></label>
-                        <div class="control">
-                            <div class="columns" id="atrributes" name="attributes">
-                                <div id="attribute" class="column is-half">
-                                    <input id='nombreA1' name="nombreA1" class="input" type="text" placeholder="Nombre del atributo">
+                        <div class="field">
+                            <label class="label">Atributos <small>*Si no es necesario, dejar en blanco</small></label>
+                            <div class="control">
+                                <div class="columns" id="atrributes" name="attributes">
+                                    <div id="attribute" class="column is-half">
+                                        <input id='nombreA1' name="nombreA1" class="input" type="text" placeholder="Nombre del atributo">
+                                    </div>
+                                    <div id="dataType" class="column is-one-quarter">
+                                        <input id='dataType1'name="dataType1" class="input" type="text" placeholder="Tipo de dato">
+                                    </div>
+                                    <div id="sizeData" class="column is-one-quarter">
+                                        <input id='sizeData1'name="sizeData1" class="input" type="text" placeholder="Tamaño">
+                                    </div>
                                 </div>
-                                <div id="dataType" class="column is-one-quarter">
-                                    <input id='dataType1'name="dataType1" class="input" type="text" placeholder="Tipo de dato">
+                                <div id="buttonsAttribute">
+                                    <button onClick="addAttribute();" class="button">Agregar</button>
                                 </div>
-                                <div id="sizeData" class="column is-one-quarter">
-                                    <input id='sizeData1'name="sizeData1" class="input" type="text" placeholder="Tamaño">
-                                </div>
-                            </div>
-                            <div id="buttonsAttribute">
-                            <button onClick="addAttribute();" class="button">Agregar</button>
                             </div>
                         </div>
+                        <button onclick="agregarTabla();" class="button is-link">Agregar tabla</button>
                     </div>
-                    <button onclick="agregarTabla();" class="button is-link">Agregar tabla</button>
                 </div>
+                <button onclick="closeInputTable();" class="modal-close is-large" aria-label="close"></button>
             </div>
-            <button onclick="closeInputTable();" class="modal-close is-large" aria-label="close"></button>
-        </div>
     </body>
 </html>
+

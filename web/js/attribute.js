@@ -1,5 +1,17 @@
+/* global cont, cont2 */
+
 let attributeNumber = 1;
 let buttonHandler = true;
+
+//var arrayValue
+//$(document).ready(function () {
+//    for (var i = 1; i >= cont2; i++) {
+//        $("select.nombreTS" + cont2).change(function () {
+//            var selectedCountry = $(this).children("option:selected").val();
+//            alert("You have selected the country - " + selectedCountry);
+//        });
+//    }
+//});
 function addAttribute() {
     attributeNumber++;
     $("#attribute").append("<input id='nombreA" + attributeNumber + "' id='nombreA" + attributeNumber + "' class='input' type='text' placeholder='Nombre del atributo'>");
