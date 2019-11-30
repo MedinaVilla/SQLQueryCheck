@@ -5,7 +5,7 @@ import java.sql.*;
  *
  * @author MedinaVilla
  */
-public class mysqlCheck {
+public class Connector {
 
     private Connection c = null;
     private Statement s = null;

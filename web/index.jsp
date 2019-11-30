@@ -6,10 +6,6 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%        
-    String query = request.getParameter("query");
-    
-%>
 <html>
     <head>
         <title>SQL</title>
@@ -19,8 +15,9 @@
         <link rel="icon" href="img/sql.jpg" type="image/icon type">
         <script src="./js/jquery.min.js"></script>
         <script type="text/javascript" src="./js/tableR.js?2"></script>
-        <script type="text/javascript" src="./js/commands.js?9"></script>
+        <script type="text/javascript" src="./js/commands.js?11"></script>
         <script type="text/javascript" src="./js/attribute.js?2"></script>
+              <script type="text/javascript" src="./js/check.js?4"></script>
     </head>
     <body>
         <section class="hero is-primary">
@@ -63,7 +60,11 @@
                     <div class="level-left">
                         <div id="buttonsAction" class="level-item">
                             <button onclick="limpiarTablero();" class="button is-danger"><strong>Limpiar</strong>&nbsp;tablero</button>&nbsp;
-                            <button onclick="getQuery();" class="button is-success" type="submit"><strong>Verificar</strong>&nbsp;sentencia</button>&nbsp;
+                            <form action="check" method="POST">
+                                <input type="hidden" id="hiddenArrayField" name="hiddenArrayField"/>
+                                <input type="hidden" id="hiddenArrayField2" name="hiddenArrayField2"/>
+                                <button onclick="getQuery();" class="button is-success" type="submit"><strong>Verificar</strong>&nbsp;sentencia</button>&nbsp;
+                            </form>
                         </div>
                     </div>
 
@@ -73,9 +74,25 @@
                 </nav>
                 <div id="boxSQL" name="boxSQL" class="box">
                     <form action="#" method="post">
-                    <!--<select style="display:none;" id='attributeTS' name='attributeTS'></select>-->
+                        
                     </form>
                 </div>
+                <%
+                    String message = request.getParameter("status");
+                    if ((message != null) && (message.equals("correct"))) {
+                        out.println("<div class='notification is-success'>");
+                        out.println("Genial! Tu sentencia SQL correcta. Sigue asi!");
+                        out.println("</div>");
+                    } else if ((message != null) && (message.equals("incorrect"))) {
+                        out.println("<div class='notification is-danger'>");
+                        out.println("Oh no! Tienes un problema en tu sintaxis. Intentalo de nuevo, tu puedes!");
+                        out.println("</div>");
+                    }
+                %>
+
+
+
+
             </div>
             <div class="column is-one-fifth">
                 <center><p class='subtitle'>Tablas</p></center>
