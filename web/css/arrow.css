@@ -1,0 +1,21 @@
+ .arrow{
+      position: relative;
+      font-size: 48px;
+      text-align: center;
+      transform: rotate(90deg);
+      animation: bouncearrow 1s infinite;
+      color: #ffc728;
+      padding-bottom: 10px;
+    }
+
+@-webkit-keyframes bouncearrow{
+    0%{top: 0px;}
+    50%{top: 20px; color: #000000;}
+    100%{top: 0px;}
+}
+
+@keyframes bouncearrow{
+    0%{top: 0px;}
+    50%{top: 20px; color: #000000;}
+    100%{top: 0px;}
+}

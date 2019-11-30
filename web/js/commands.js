@@ -16,7 +16,6 @@ operadores.push(">=");
 
 
 function selectHandler() {
-    var exist = false;
     cont++;
     $("#boxSQL").append(" select ");
     $("#boxSQL").append("<select class='select' id='attributeTS" + cont + "' name='attributeTS" + cont + "'></select>");
@@ -34,44 +33,55 @@ function selectHandler() {
     sentenciasArray.push("select");
     tagsSelect.push("attributeTS" + cont + "");
 
-//    if (exist)
-//        comboBoxValArray.push(attributesNoRepetition[0]);
-//    else
-//        comboBoxValArray.push("*");
+    $("#hint").empty();
+    $("#hint").append("<div class='arrow'>&#8674;</div>");
+    $("#hint").append("<div class='notification is-warning'>" +
+            "<button class='delete'></button>" +
+            "Recuerda que despues de un select van los atributos a <strong>visualizar</strong> de una tabla" +
+            "<br/> Ejemplo: select <strong>nombre from</strong> persona;</div>");
+    $("#selectT").removeClass("is-success is-outlined");
+    $("#from").addClass("is-success is-outlined");
 }
 function fromHandler() {
-    var exist = false;
     cont2++;
     $("#boxSQL").append(" from ");
     $("#boxSQL").append("<select  class='select' id='nombreTS" + cont2 + "' name='nombreTS'></select>");
 
     var array2 = [];
-    if ($("#attributeTS" + cont).val().toString() !== "*") {
-        for (var i = 0; i < tablas.length; i++) {
-            for (var j = 0; j < tablas[i].atributos[0].length; j++) {
-                if (tablas[i].atributos[0][j].toString() === ($("#attributeTS" + cont).val().toString())) {
-                    array2.push(tablas[i].nombre.toString());
+    if ($("#attributeTS" + cont).val() !== undefined) {
+        if ($("#attributeTS" + cont).val().toString() !== "*") {
+            for (var i = 0; i < tablas.length; i++) {
+                for (var j = 0; j < tablas[i].atributos[0].length; j++) {
+                    if (tablas[i].atributos[0][j].toString() === ($("#attributeTS" + cont).val().toString())) {
+                        array2.push(tablas[i].nombre.toString());
+                    }
                 }
             }
-        }
-        for (var k = 0; k < array2.length; k++) {
-            var o = new Option(array2[k], array2[k]);
-            $(o).html(array2[k]);
-            $("#nombreTS" + cont2 + "").append(o);
-        }
-    } else {
-        for (var i = 0; i < tablas.length; i++) {
-            var o = new Option(tablas[i].nombre.toString(), tablas[i].atributos[0].toString());
-            $(o).html(tablas[i].nombre.toString());
-            $("#nombreTS" + cont2 + "").append(o);
+            for (var k = 0; k < array2.length; k++) {
+                var o = new Option(array2[k], array2[k]);
+                $(o).html(array2[k]);
+                $("#nombreTS" + cont2 + "").append(o);
+            }
+        } else {
+            for (var i = 0; i < tablas.length; i++) {
+                var o = new Option(tablas[i].nombre.toString(), tablas[i].atributos[0].toString());
+                $(o).html(tablas[i].nombre.toString());
+                $("#nombreTS" + cont2 + "").append(o);
+            }
         }
     }
+
     sentenciasArray.push("from");
     tagsSelect.push("nombreTS" + cont2 + "");
-//     if (exist)
-//        comboBoxValArray.push(firstElement);
-//    else
-//        comboBoxValArray.push(" ");
+
+    $("#hint").empty();
+    $("#hint").append("<div class='arrow'>&#8674;</div>");
+    $("#hint").append("<div class='notification is-warning'>" +
+            "<button class='delete'></button>" +
+            "Recuerda que despues un from sigue el nombre de una <strong>tabla</strong>" +
+            "<br/> Ejemplo: select <strong>nombre from <strong>persona</strong> ;</div>");
+
+    $("#from").removeClass("is-success is-outlined");
 }
 function whereHandler() {
     cont4++;
@@ -89,6 +99,14 @@ function whereHandler() {
     tagsSelect.push("Fcond" + cont4 + "");
     tagsSelect.push("operador" + cont4 + "");
     tagsSelect.push("Scond" + cont4 + "");
+
+    $("#hint").empty();
+    $("#hint").append("<div class='arrow'>&#8674;</div>");
+    $("#hint").append("<div class='notification is-warning'>" +
+            "<button class='delete'></button>" +
+            "Recuerda que despues where un atributo, el cual, puede ser comparado o puedes estar contenido entro select mediante un in, not in" +
+            "<br/> Ejemplo: select nombre from persona <strong> where nombre == 'Jesus'</strong> ;</div>");
+
 }
 function notHandler() {
     $("#boxSQL").append(" not in (");

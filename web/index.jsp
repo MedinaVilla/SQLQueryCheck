@@ -12,10 +12,11 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="./css/bulma.css" type="text/css"/>
+        <link rel="stylesheet" href="./css/arrow.css?2" type="text/css"/>
         <link rel="icon" href="img/sql.jpg" type="image/icon type">
         <script src="./js/jquery.min.js"></script>
         <script type="text/javascript" src="./js/tableR.js?2"></script>
-        <script type="text/javascript" src="./js/commands.js?11"></script>
+        <script type="text/javascript" src="./js/commands.js?17"></script>
         <script type="text/javascript" src="./js/attribute.js?2"></script>
               <script type="text/javascript" src="./js/check.js?4"></script>
     </head>
@@ -41,15 +42,15 @@
                     </p>
                     <ul class="menu-list">
                         <li>
-                            <button onClick="selectHandler();" class="button is-fullwidth"><center>Select</center></button>
+                            <button id="selectT" name="selectT" onClick="selectHandler();" class="button is-success is-outlined is-fullwidth"><center>Select</center></button>
                             <br/>
-                            <button onclick="fromHandler();" class="button is-fullwidth"><center>from</center></button>
+                            <button id="from" onclick="fromHandler();" class="button is-fullwidth"><center>from</center></button>
                             <br/>
-                            <button onclick="whereHandler();" class="button is-fullwidth"><center>where</center></button>
+                            <button id="where" onclick="whereHandler();" class="button is-fullwidth"><center>where</center></button>
                             <br/>
-                            <button onclick="notHandler();" class="button is-fullwidth"><center>not in</center></button>
+                            <button id="not" onclick="notHandler();" class="button is-fullwidth"><center>not in</center></button>
                             <br/>
-                            <button onclick="inHandler();" class="button is-fullwidth"><center>in</center></button>
+                            <button id="in" onclick="inHandler();" class="button is-fullwidth"><center>in</center></button>
                         </li>
                     </ul> 
                 </div>
@@ -76,6 +77,10 @@
                     <form action="#" method="post">
                         
                     </form>
+                </div>
+                <div id="hint" name="hint">
+                    
+                    
                 </div>
                 <%
                     String message = request.getParameter("status");
