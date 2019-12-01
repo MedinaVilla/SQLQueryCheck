@@ -23,15 +23,34 @@
             String sentenciasArray2 = request.getParameter("hiddenArrayField2");
             String[] sentencias = sentenciasArray.split(",");
             String[] tags = sentenciasArray2.split(",");
-            for(int k=0;k<tags.length;k++){
-            System.out.println(tags[k]);
-            }
             String query = "";
-            System.out.println(sentencias.length);
             for (int i = 0; i < sentencias.length; i++) {
                 if (sentencias[i].equals("where")) {
                     query = query.concat(sentencias[i] + " ");
                     for (int j = i; j < i + 3; j++) {
+                        query = query.concat(tags[j] + " ");
+                    }
+                } else if (sentencias[i].equals("in(")) {
+                    query = query.concat("where" + " ");
+                    query = query.concat(tags[i] + " ");
+                    query = query.concat(sentencias[i] + " ");
+                } else if (sentencias[i].equals("not in(")) {
+                    query = query.concat("where" + " ");
+                    query = query.concat(tags[i] + " ");
+                    query = query.concat(sentencias[i] + " ");
+                } else if (sentencias[i].equals("*)")) {
+                    query = query.concat(")" + " ");
+                } else if (sentencias[i].equals("union")) {
+                    query = query.concat("union" + " ");
+                } else if (sentencias[i].equals("group by")) {
+                    query = query.concat("group by" + " ");
+                    query = query.concat(tags[i] + " ");
+                } else if (sentencias[i].equals("join")) {
+                    query = query.concat("join" + " ");
+                    query = query.concat(tags[i] + " ");
+                    query = query.concat("on" + " ");
+                    query = query.concat(tags[i] + " ");
+                    for (int j = i+2; j < i + 3; j++) {
                         query = query.concat(tags[j] + " ");
                     }
                 } else {
@@ -40,8 +59,6 @@
             }
             query = query.concat(";");
             System.out.println(query);
-//            System.out.println(sentencias[0]);
-//            System.out.println(query2.toString());
 
             Connector con = new Connector();
             con.conectar();
@@ -52,6 +69,7 @@
                     System.out.println("Error syntax");
                     response.sendRedirect("/SQLQueryProject?status=incorrect");
                 } else {
+                    System.out.println("Correct syntax");
                     response.sendRedirect("/SQLQueryProject?status=correct");
                 }
             }

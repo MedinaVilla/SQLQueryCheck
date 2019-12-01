@@ -3,6 +3,10 @@ var cont = 0; //attributes
 var cont2 = 0; //Tables names
 var cont3 = 0; //operadores
 var cont4 = 0;
+var cont5 = 0;
+var cont6 = 0;
+var cont7 = 0;
+var cont8 = 0;
 var sentenciasArray = [];
 var tagsSelect = [];
 
@@ -41,6 +45,8 @@ function selectHandler() {
             "<br/> Ejemplo: select <strong>nombre from</strong> persona;</div>");
     $("#selectT").removeClass("is-success is-outlined");
     $("#from").addClass("is-success is-outlined");
+
+    $("#messageInfo").remove();
 }
 function fromHandler() {
     cont2++;
@@ -80,13 +86,14 @@ function fromHandler() {
             "<button class='delete'></button>" +
             "Recuerda que despues un from sigue el nombre de una <strong>tabla</strong>" +
             "<br/> Ejemplo: select <strong>nombre from <strong>persona</strong> ;</div>");
-
     $("#from").removeClass("is-success is-outlined");
+
+    $("#messageInfo").remove();
 }
 function whereHandler() {
     cont4++;
     $("#boxSQL").append(" where ");
-    $("#boxSQL").append("<input type='text' id='Fcond" + cont4 + "' name='Fcond" + cont4 + "'></input>");
+    $("#boxSQL").append("<input type='text' id='Fcond" + cont4 + "' name='Fcond" + cont4 + "' required></input>");
     $("#boxSQL").append("<select class='select' id='operador" + cont4 + "' 'operador" + cont4 + "'></select>");
     for (var l = 0; l < operadores.length; l++) {
         var o = new Option(operadores[l], operadores[l]);
@@ -94,7 +101,7 @@ function whereHandler() {
         $("#operador" + cont4 + "").append(o);
 
     }
-    $("#boxSQL").append("<input type='text' id='Scond" + cont4 + "' name='Scond2" + cont4 + "'></input>");
+    $("#boxSQL").append("<input type='text' id='Scond" + cont4 + "' name='Scond2" + cont4 + "' required></input>");
     sentenciasArray.push("where");
     tagsSelect.push("Fcond" + cont4 + "");
     tagsSelect.push("operador" + cont4 + "");
@@ -106,24 +113,103 @@ function whereHandler() {
             "<button class='delete'></button>" +
             "Recuerda que despues where un atributo, el cual, puede ser comparado o puedes estar contenido entro select mediante un in, not in" +
             "<br/> Ejemplo: select nombre from persona <strong> where nombre == 'Jesus'</strong> ;</div>");
+    $("#select").addClass("is-success is-outlined");
 
+    $("#messageInfo").remove();
 }
 function notHandler() {
-    $("#boxSQL").append(" not in (");
+    cont5++;
+    $("#boxSQL").append("where ");
+    $("#boxSQL").append("<select  class='select' id='attributeNot" + cont5 + "' name='attributeNot'></select>");
+    for (var i = 0; i < attributesNoRepetition.length; i++) {
+        var o = new Option(attributesNoRepetition[i], attributesNoRepetition[i]);
+        $(o).html(attributesNoRepetition[i]);
+        $("#attributeNot" + cont5).append(o);
+        exist = true;
+    }
+    var o = new Option("*", "*");
+    $(o).html("*");
+
+    $("#boxSQL").append(" not in(");
     $("#buttonsAction").append("<button id='closeN' onClick='cerrarP();' class='small button is-warning'> Cerrar )</button><hr/>");
     sentenciasArray.push("not in(");
+    tagsSelect.push("attributeNot" + cont5 + "");
+
+    $("#messageInfo").remove();
 }
 function inHandler() {
-    $("#boxSQL").append(" in (");
-    $("#buttonsAction").append("<button id='closeI' onClick='cerrarP();' class='small button is-warning'> Cerrar )</button><hr/>");
+    cont6++;
+    $("#boxSQL").append("where ");
+    $("#boxSQL").append("<select  class='select' id='attributeIn" + cont6 + "' name='attributeIn'></select>");
+    for (var i = 0; i < attributesNoRepetition.length; i++) {
+        var o = new Option(attributesNoRepetition[i], attributesNoRepetition[i]);
+        $(o).html(attributesNoRepetition[i]);
+        $("#attributeIn" + cont6).append(o);
+        exist = true;
+    }
+    var o = new Option("*", "*");
+    $(o).html("*");
+
+    $("#boxSQL").append(" in(");
+    $("#buttonsAction").append("<button id='closeN' onClick='cerrarP();' class='small button is-warning'> Cerrar )</button><hr/>");
     sentenciasArray.push("in(");
+    tagsSelect.push("attributeIn" + cont6 + "");
+    $("#messageInfo").remove();
 }
 
+function unionHandler() {
+    $("#boxSQL").append(" union ");
+    sentenciasArray.push("union");
+    tagsSelect.push("union");
+    $("#selectT").addClass("is-success is-outlined");
+    $("#messageInfo").remove();
+}
 
+function joinHandler() {
+    cont8++;
+    $("#boxSQL").append(" join ");
+    $("#boxSQL").append("<select  class='select' id='attributeJoin" + cont8 + "' name='attributeJoin'></select>");
+    $("#boxSQL").append(" ON ");
+    var array2 = [];
+    for (var i = 0; i < tablas.length; i++) {
+        var o = new Option(tablas[i].nombre, tablas[i].nombre);
+        $(o).html(tablas[i].nombre);
+        $("#attributeJoin" + cont8 + "").append(o);
+    }
+    $("#boxSQL").append(" <input type='text' id='Fjoin" + cont8 + "' name='Fjoin" + cont8 + "' required></input>");
+    $("#boxSQL").append(" = ");
+    $("#boxSQL").append("<input type='text' id='Sjoin" + cont8 + "' name='Sjoin" + cont8 + "' required></input>");
+
+    sentenciasArray.push("join");
+    tagsSelect.push("attributeJoin" + cont8 + "");
+    tagsSelect.push("Fjoin" + cont8 + "");
+    tagsSelect.push("Sjoin" + cont8 + "");
+}
+
+function groupbyHandler() {
+    cont7++;
+    $("#boxSQL").append(" group by ");
+    $("#boxSQL").append("<select  class='select' id='attributeGB" + cont7 + "' name='attributeGB'></select>");
+
+    for (var i = 0; i < attributesNoRepetition.length; i++) {
+        var o = new Option(attributesNoRepetition[i], attributesNoRepetition[i]);
+        $(o).html(attributesNoRepetition[i]);
+        $("#attributeGB" + cont7).append(o);
+        exist = true;
+    }
+    sentenciasArray.push("group by");
+    tagsSelect.push("attributeGB" + cont7 + "");
+    $("#messageInfo").remove();
+
+}
 function limpiarTablero() {
     cont = 0;
     cont2 = 0;
     cont4 = 0;
+    cont5 = 0;
+    cont6 = 0;
+    cont7 = 0;
+    cont8 = 0;
     sentenciasArray = [];
     tagsSelect = [];
     $("#boxSQL").empty();
@@ -142,6 +228,6 @@ function getQuery() {
 }
 function cerrarP() {
     $("#boxSQL").append(" )");
-    $("#closeI").remove();
+    sentenciasArray.push("*)");
     $("#closeN").remove();
 }

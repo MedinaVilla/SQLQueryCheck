@@ -16,9 +16,9 @@
         <link rel="icon" href="img/sql.jpg" type="image/icon type">
         <script src="./js/jquery.min.js"></script>
         <script type="text/javascript" src="./js/tableR.js?2"></script>
-        <script type="text/javascript" src="./js/commands.js?17"></script>
+        <script type="text/javascript" src="./js/commands.js?20"></script>
         <script type="text/javascript" src="./js/attribute.js?2"></script>
-              <script type="text/javascript" src="./js/check.js?4"></script>
+        <script type="text/javascript" src="./js/check.js?4"></script>
     </head>
     <body>
         <section class="hero is-primary">
@@ -48,9 +48,15 @@
                             <br/>
                             <button id="where" onclick="whereHandler();" class="button is-fullwidth"><center>where</center></button>
                             <br/>
-                            <button id="not" onclick="notHandler();" class="button is-fullwidth"><center>not in</center></button>
+                            <button id="not" onclick="notHandler();" class="button is-fullwidth"><center>where _ not in</center></button>
                             <br/>
-                            <button id="in" onclick="inHandler();" class="button is-fullwidth"><center>in</center></button>
+                            <button id="in" onclick="inHandler();" class="button is-fullwidth"><center>where _ in</center></button>
+                            <br/>
+                            <button id="union" onclick="unionHandler();" class="button is-fullwidth"><center>union</center></button>
+                            <br/>
+                            <button id="join" onclick="joinHandler();" class="button is-fullwidth"><center>join</center></button>
+                            <br/>
+                            <button id="groupby" onclick="groupbyHandler();" class="button is-fullwidth"><center>group by</center></button>
                         </li>
                     </ul> 
                 </div>
@@ -75,21 +81,21 @@
                 </nav>
                 <div id="boxSQL" name="boxSQL" class="box">
                     <form action="#" method="post">
-                        
+
                     </form>
                 </div>
                 <div id="hint" name="hint">
-                    
-                    
+
+
                 </div>
                 <%
                     String message = request.getParameter("status");
                     if ((message != null) && (message.equals("correct"))) {
-                        out.println("<div class='notification is-success'>");
+                        out.println("<div id='messageInfo' class='notification is-success'>");
                         out.println("Genial! Tu sentencia SQL correcta. Sigue asi!");
                         out.println("</div>");
                     } else if ((message != null) && (message.equals("incorrect"))) {
-                        out.println("<div class='notification is-danger'>");
+                        out.println("<div id='messageInfo' class='notification is-danger'>");
                         out.println("Oh no! Tienes un problema en tu sintaxis. Intentalo de nuevo, tu puedes!");
                         out.println("</div>");
                     }
