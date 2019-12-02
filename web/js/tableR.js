@@ -2,6 +2,7 @@
 
 let tablas = [];
 var attributesNoRepetition = new Array(0);
+//var attributesRepetition =new Array(0);
 
 $(document).ready(function () {
     $("#bienvenida").addClass("is-active");
@@ -29,8 +30,9 @@ function agregarTabla() {
         $("#tables").append("<div>" + $("#nombreA" + i).val() + " " + $("#dataType" + i).val() + " (" + $("#sizeData" + i).val() + ")</div>");
         array.push($("#nombreA" + i).val());
 
-        if (attributesNoRepetition.indexOf($("#nombreA" + i).val().toString()) === -1)
+        if (attributesNoRepetition.indexOf($("#nombreA" + i).val().toString()) === -1){
             attributesNoRepetition.push($("#nombreA" + i).val());
+        }
     }
     $("#tables").append("<hr/>");
     tablas.push({'nombre': $("#nombreT").val(), 'atributos': [array]});

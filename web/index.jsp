@@ -3,7 +3,6 @@
     Created on : 24/11/2019, 10:33:07 PM
     Author     : MedinaVilla
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,11 +11,11 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="./css/bulma.css" type="text/css"/>
-        <link rel="stylesheet" href="./css/arrow.css?3" type="text/css"/>
+        <link rel="stylesheet" href="./css/arrow.css?4" type="text/css"/>
         <link rel="icon" href="img/sql.jpg" type="image/icon type">
         <script src="./js/jquery.min.js"></script>
         <script type="text/javascript" src="./js/tableR.js?3"></script>
-        <script type="text/javascript" src="./js/commands.js?23"></script>
+        <script type="text/javascript" src="./js/commands.js?24"></script>
         <script type="text/javascript" src="./js/attribute.js?3"></script>
         <script type="text/javascript" src="./js/check.js?4"></script>
     </head>
@@ -67,11 +66,7 @@
                     <div class="level-left">
                         <div id="buttonsAction" class="level-item">
                             <button onclick="limpiarTablero();" class="button is-danger"><strong>Limpiar</strong>&nbsp;tablero</button>&nbsp;
-                            <form action="check" method="POST">
-                                <input type="hidden" id="hiddenArrayField" name="hiddenArrayField"/>
-                                <input type="hidden" id="hiddenArrayField2" name="hiddenArrayField2"/>
-                                <button onclick="getQuery();" class="button is-success" type="submit"><strong>Verificar</strong>&nbsp;sentencia</button>&nbsp;
-                            </form>
+                            <button onclick="getQuery();" class="button is-success" type="submit"><strong>Verificar</strong>&nbsp;sentencia</button>&nbsp;
                         </div>
                     </div>
 
@@ -81,33 +76,16 @@
                     </div>
                 </nav>
                 <div id="boxSQL" name="boxSQL" class="box">
-                    <form action="#" method="post">
-
-                    </form>
+                    <form action="#" method="post"></form>
                 </div>
-                <div id="hint" name="hint">
-
-
-                </div>
-                <%
-                    String message = request.getParameter("status");
-                    if ((message != null) && (message.equals("correct"))) {
-                        out.println("<div id='messageInfo' class='notification is-success'>");
-                        out.println("Genial! Tu sentencia SQL correcta. Sigue asi!");
-                        out.println("</div>");
-                    } else if ((message != null) && (message.equals("incorrect"))) {
-                        out.println("<div id='messageInfo' class='notification is-danger'>");
-                        out.println("Oh no! Tienes un problema en tu sintaxis. Intentalo de nuevo, tu puedes!");
-                        out.println("</div>");
-                    }
-                %>
+                <hr/>
+                <div id="hint" name="hint"></div>
+                <div id="checkSQL" name="checkSQL"></div>
             </div>
             <div class="column is-one-fifth">
                 <center><p class='subtitle'>Tablas</p></center>
                 <hr/>
-                <section id="tables" name="tables" class="box">
-
-                </section>
+                <section id="tables" name="tables" class="box"></section>
             </div>
         </div>
         <div id="addTable" class="modal">
@@ -150,43 +128,42 @@
         <%
             String messageS = request.getParameter("status");
             if (messageS == null) {
-                out.println("<div id='bienvenida' class='modal'>"+
-            "<div class='modal-background'></div>"+
-            "<div class='modal-content'>"+
-               " <div class='box'>"+
-                "<center><p class='title'>Bienvenido</p></center>"+
-                 "   <hr/>"+
-                  "  <div class='field'>"+
-                   "     <p>Te daremos un pequeño tutorial de cómo usar nuestro validador de sentencias SQL"+
-                    "    </p>"+
-                    "</div>"+
-                   " <p>"+
-                    "    &#8594; Para realizar primero necesitaras <strong>crear una tabla</strong> para desde ahi, hacer tus consultas de manera correcta."+
-                   " </p>"+
-                   " <p>"+
-                   "     &#8594; Posteriormente, podras ir haciendo tu query con algunas recomendaciones del sistema:"+
-                   " </p>"+
-                   " &nbsp;&nbsp;&nbsp;&nbsp;&#8594;Cada vez que un boton se vea de esta manera:"+
-                   " <div class='field'>"+
-                    "<center><button class='button is-success is-outlined'>Select</button></center>"+
-                    "</div>"+
-                    "<p>"+
-                        "significa que es un bloque que te recomendamos para que tu query tenga sentido."+
-                    "</p>"+
-                    "<p>"+
-                        "<strong>Recuerda</strong> que eres libre de explorar todas tus posibilidades e ir aprendiendo de una manera divertida."+
-                    "</p>"+
-                    "<hr/>"+
-                    "<div class='field'>"+
-                        "<center><button onClick='empezarPrograma();' class='button is-primary is-focused'>Empezar</button></center>"+
-                    "</div>"+
-                "</div>"+
-                "<button onclick='closeInputTable();' class='modal-close is-large' aria-label='close'></button>"+
-            "</div>"+
-        "</div>");
+                out.println("<div id='bienvenida' class='modal'>"
+                        + "<div class='modal-background'></div>"
+                        + "<div class='modal-content'>"
+                        + " <div class='box'>"
+                        + "<center><p class='title'>Bienvenido</p></center>"
+                        + "   <hr/>"
+                        + "  <div class='field'>"
+                        + "     <p>Te daremos un pequeño tutorial de cómo usar nuestro validador de sentencias SQL"
+                        + "    </p>"
+                        + "</div>"
+                        + " <p>"
+                        + "    &#8594; Para realizar primero necesitaras <strong>crear una tabla</strong> para desde ahi, hacer tus consultas de manera correcta."
+                        + " </p>"
+                        + " <p>"
+                        + "     &#8594; Posteriormente, podras ir haciendo tu query con algunas recomendaciones del sistema:"
+                        + " </p>"
+                        + " &nbsp;&nbsp;&nbsp;&nbsp;&#8594;Cada vez que un boton se vea de esta manera:"
+                        + " <div class='field'>"
+                        + "<center><button class='button is-success is-outlined'>Select</button></center>"
+                        + "</div>"
+                        + "<p>"
+                        + "significa que es un bloque que te recomendamos para que tu query tenga sentido."
+                        + "</p>"
+                        + "<p>"
+                        + "<strong>Recuerda</strong> que eres libre de explorar todas tus posibilidades e ir aprendiendo de una manera divertida."
+                        + "</p>"
+                        + "<hr/>"
+                        + "<div class='field'>"
+                        + "<center><button onClick='empezarPrograma();' class='button is-primary is-focused'>Empezar</button></center>"
+                        + "</div>"
+                        + "</div>"
+                        + "<button onclick='closeInputTable();' class='modal-close is-large' aria-label='close'></button>"
+                        + "</div>"
+                        + "</div>");
             }
         %>
-        
     </body>
 </html>
 

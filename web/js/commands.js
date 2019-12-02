@@ -1,4 +1,4 @@
-/* global tablas, attributesNoRepetition */
+/* global tablas, attributesNoRepetition, attributesRepetition */
 var cont = 0; //attributes
 var cont2 = 0; //Tables names
 var cont3 = 0; //operadores
@@ -30,6 +30,13 @@ function selectHandler() {
         $("#attributeTS" + cont).append(o);
         exist = true;
     }
+//    for (var i = 0; i < attributesRepetition.length; i++) {
+//        alert("olaaaa");
+//        $(o).html(attributesRepetition[i]);
+//        $("#attributeTS" + cont).append(o);
+//        exist = true;
+//    }
+
     var o = new Option("*", "*");
     $(o).html("*");
     $("#attributeTS" + cont).append(o);
@@ -265,9 +272,23 @@ function getQuery() {
         else
             tagsValue.push(" ");
     }
-    document.getElementById("hiddenArrayField").value = sentenciasArray;
-    document.getElementById("hiddenArrayField2").value = tagsValue;
+    var http = new XMLHttpRequest();
+    http.open("POST", "http://localhost:8081/SQLQueryProject/check.jsp", true);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    var params = "hiddenArrayField=" + sentenciasArray + "&hiddenArrayField2=" + tagsValue; // probably use document.getElementById(...).value
+    http.send(params);
+    http.onload = function () {
+        if (http.responseText.includes("incorrect")) {
+            $("#checkSQL").append("<div id='messageInfo' class='notification is-danger'>" +
+                    "Oh no! Tu sentencia SQL es incorrecta. Venga, tu puedes!" +
+                    "</div>");
+        } else
+            $("#checkSQL").append("<div id='messageInfo' class='notification is-success'>" +
+                    "Genial! Tu sentencia SQL correcta. Sigue asi!" +
+                    "</div>");
+    };
 }
+
 function cerrarP() {
     $("#boxSQL").append(" )");
     sentenciasArray.push("*)");

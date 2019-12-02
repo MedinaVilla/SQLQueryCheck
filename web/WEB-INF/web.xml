@@ -10,7 +10,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>checkSQL</servlet-name>
-        <url-pattern>/check</url-pattern>
+        <url-pattern>/check.jsp</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
