@@ -4,7 +4,11 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/jcris/Documents/NetBeansProjects/SQLQueryProject/web/index.jsp</file>
+            <file>file:/C:/Users/jcris/Documents/NetBeansProjects/SQLQueryProject/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/jcris/Documents/NetBeansProjects/SQLQueryProject/web/js/attribute.js</file>
+            <file>file:/C:/Users/jcris/Documents/NetBeansProjects/SQLQueryProject/src/java/Java/Connector.java</file>
             <file>file:/C:/Users/jcris/Documents/NetBeansProjects/SQLQueryProject/web/checkSQL.jsp</file>
+            <file>file:/C:/Users/jcris/Documents/NetBeansProjects/SQLQueryProject/web/js/commands.js</file>
         </group>
     </open-files>
 </project-private>

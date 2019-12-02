@@ -12,12 +12,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="./css/bulma.css" type="text/css"/>
-        <link rel="stylesheet" href="./css/arrow.css?2" type="text/css"/>
+        <link rel="stylesheet" href="./css/arrow.css?3" type="text/css"/>
         <link rel="icon" href="img/sql.jpg" type="image/icon type">
         <script src="./js/jquery.min.js"></script>
-        <script type="text/javascript" src="./js/tableR.js?2"></script>
-        <script type="text/javascript" src="./js/commands.js?20"></script>
-        <script type="text/javascript" src="./js/attribute.js?2"></script>
+        <script type="text/javascript" src="./js/tableR.js?3"></script>
+        <script type="text/javascript" src="./js/commands.js?23"></script>
+        <script type="text/javascript" src="./js/attribute.js?3"></script>
         <script type="text/javascript" src="./js/check.js?4"></script>
     </head>
     <body>
@@ -76,6 +76,7 @@
                     </div>
 
                     <div class="level-right">
+                        <div id="arrow2" class='arrow2'>&#8594;</div>
                         <button onClick="showInputTable();" class="button is-info"><strong>Crear</strong>&nbsp;tabla</button>&nbsp;
                     </div>
                 </nav>
@@ -100,10 +101,6 @@
                         out.println("</div>");
                     }
                 %>
-
-
-
-
             </div>
             <div class="column is-one-fifth">
                 <center><p class='subtitle'>Tablas</p></center>
@@ -113,7 +110,7 @@
                 </section>
             </div>
         </div>
-        <div class="modal">
+        <div id="addTable" class="modal">
             <div class="modal-background"></div>
             <div class="modal-content">
                 <div class='box'>
@@ -148,6 +145,48 @@
                 </div>
                 <button onclick="closeInputTable();" class="modal-close is-large" aria-label="close"></button>
             </div>
+        </div>
+        <!-- Bienvenida -->
+        <%
+            String messageS = request.getParameter("status");
+            if (messageS == null) {
+                out.println("<div id='bienvenida' class='modal'>"+
+            "<div class='modal-background'></div>"+
+            "<div class='modal-content'>"+
+               " <div class='box'>"+
+                "<center><p class='title'>Bienvenido</p></center>"+
+                 "   <hr/>"+
+                  "  <div class='field'>"+
+                   "     <p>Te daremos un pequeño tutorial de cómo usar nuestro validador de sentencias SQL"+
+                    "    </p>"+
+                    "</div>"+
+                   " <p>"+
+                    "    &#8594; Para realizar primero necesitaras <strong>crear una tabla</strong> para desde ahi, hacer tus consultas de manera correcta."+
+                   " </p>"+
+                   " <p>"+
+                   "     &#8594; Posteriormente, podras ir haciendo tu query con algunas recomendaciones del sistema:"+
+                   " </p>"+
+                   " &nbsp;&nbsp;&nbsp;&nbsp;&#8594;Cada vez que un boton se vea de esta manera:"+
+                   " <div class='field'>"+
+                    "<center><button class='button is-success is-outlined'>Select</button></center>"+
+                    "</div>"+
+                    "<p>"+
+                        "significa que es un bloque que te recomendamos para que tu query tenga sentido."+
+                    "</p>"+
+                    "<p>"+
+                        "<strong>Recuerda</strong> que eres libre de explorar todas tus posibilidades e ir aprendiendo de una manera divertida."+
+                    "</p>"+
+                    "<hr/>"+
+                    "<div class='field'>"+
+                        "<center><button onClick='empezarPrograma();' class='button is-primary is-focused'>Empezar</button></center>"+
+                    "</div>"+
+                "</div>"+
+                "<button onclick='closeInputTable();' class='modal-close is-large' aria-label='close'></button>"+
+            "</div>"+
+        "</div>");
+            }
+        %>
+        
     </body>
 </html>
 

@@ -41,13 +41,14 @@ function selectHandler() {
     $("#hint").append("<div class='arrow'>&#8674;</div>");
     $("#hint").append("<div class='notification is-warning'>" +
             "<button class='delete'></button>" +
-            "Recuerda que despues de un select van los atributos a <strong>visualizar</strong> de una tabla" +
+            "<strong>SELECT:</strong> Suele ir acompañada de un atributo o asterisco. Después del SELECT y los atributos, se continua con la palabra reservada <strong>FROM </strong>" +
             "<br/> Ejemplo: select <strong>nombre from</strong> persona;</div>");
     $("#selectT").removeClass("is-success is-outlined");
     $("#from").addClass("is-success is-outlined");
 
     $("#messageInfo").remove();
 }
+
 function fromHandler() {
     cont2++;
     $("#boxSQL").append(" from ");
@@ -76,7 +77,6 @@ function fromHandler() {
             }
         }
     }
-
     sentenciasArray.push("from");
     tagsSelect.push("nombreTS" + cont2 + "");
 
@@ -84,12 +84,14 @@ function fromHandler() {
     $("#hint").append("<div class='arrow'>&#8674;</div>");
     $("#hint").append("<div class='notification is-warning'>" +
             "<button class='delete'></button>" +
-            "Recuerda que despues un from sigue el nombre de una <strong>tabla</strong>" +
+            "<strong>FROM:</strong> Recuerda que después un FROM sigue el nombre de una tabla de donde se listados las columnas enunciadas \n\
+                en el SELECT. Después de un FROM puede ir un </strong>JOIN</strong> o un <strong>WHERE</strong>" +
             "<br/> Ejemplo: select <strong>nombre from <strong>persona</strong> ;</div>");
     $("#from").removeClass("is-success is-outlined");
 
     $("#messageInfo").remove();
 }
+
 function whereHandler() {
     cont4++;
     $("#boxSQL").append(" where ");
@@ -111,12 +113,14 @@ function whereHandler() {
     $("#hint").append("<div class='arrow'>&#8674;</div>");
     $("#hint").append("<div class='notification is-warning'>" +
             "<button class='delete'></button>" +
-            "Recuerda que despues where un atributo, el cual, puede ser comparado o puedes estar contenido entro select mediante un in, not in" +
+            "<strong>WHERE:</strong> Recuerda que después WHERE un atributo, el cual, puede ser comparado \n\
+            o puedes estar contenido dentro de un select mediante un IN, NOT IN." +
             "<br/> Ejemplo: select nombre from persona <strong> where nombre == 'Jesus'</strong> ;</div>");
     $("#select").addClass("is-success is-outlined");
 
     $("#messageInfo").remove();
 }
+
 function notHandler() {
     cont5++;
     $("#boxSQL").append("where ");
@@ -135,8 +139,16 @@ function notHandler() {
     sentenciasArray.push("not in(");
     tagsSelect.push("attributeNot" + cont5 + "");
 
+
+    $("#hint").empty();
+    $("#hint").append("<div class='arrow'>&#8674;</div>");
+    $("#hint").append("<div class='notification is-warning'>" +
+            "<button class='delete'></button>" +
+            "<strong>NOT IN:</strong>Recuerda que después de un NOT IN va una subconsulta la cual inicia con un SELECT." +
+            "<br/> Ejemplo: select nombre from persona <strong> where nombre == 'Jesus'</strong> ;</div>");
     $("#messageInfo").remove();
 }
+
 function inHandler() {
     cont6++;
     $("#boxSQL").append("where ");
@@ -154,6 +166,13 @@ function inHandler() {
     $("#buttonsAction").append("<button id='closeN' onClick='cerrarP();' class='small button is-warning'> Cerrar )</button><hr/>");
     sentenciasArray.push("in(");
     tagsSelect.push("attributeIn" + cont6 + "");
+
+    $("#hint").empty();
+    $("#hint").append("<div class='arrow'>&#8674;</div>");
+    $("#hint").append("<div class='notification is-warning'>" +
+            "<button class='delete'></button>" +
+            "<strong>IN:</strong> Recuerda que después de un IN va una subconsulta la cual inicia con un SELECT." +
+            "<br/> Ejemplo: select nombre from persona where nombre <strong>in</strong>(select * from robot);</strong> ;</div>");
     $("#messageInfo").remove();
 }
 
@@ -162,6 +181,13 @@ function unionHandler() {
     sentenciasArray.push("union");
     tagsSelect.push("union");
     $("#selectT").addClass("is-success is-outlined");
+
+    $("#hint").empty();
+    $("#hint").append("<div class='arrow'>&#8674;</div>");
+    $("#hint").append("<div class='notification is-warning'>" +
+            "<button class='delete'></button>" +
+            "<strong>UNION:</strong> Recuerda que despues de una UNION, siempre va un SELECT" +
+            "<br/> Ejemplo: select nombre from persona <strong>union</strong> select * from robot;</strong> ;</div>");
     $("#messageInfo").remove();
 }
 
@@ -170,7 +196,7 @@ function joinHandler() {
     $("#boxSQL").append(" join ");
     $("#boxSQL").append("<select  class='select' id='attributeJoin" + cont8 + "' name='attributeJoin'></select>");
     $("#boxSQL").append(" ON ");
-    var array2 = [];
+
     for (var i = 0; i < tablas.length; i++) {
         var o = new Option(tablas[i].nombre, tablas[i].nombre);
         $(o).html(tablas[i].nombre);
@@ -184,6 +210,14 @@ function joinHandler() {
     tagsSelect.push("attributeJoin" + cont8 + "");
     tagsSelect.push("Fjoin" + cont8 + "");
     tagsSelect.push("Sjoin" + cont8 + "");
+
+    $("#hint").empty();
+    $("#hint").append("<div class='arrow'>&#8674;</div>");
+    $("#hint").append("<div class='notification is-warning'>" +
+            "<button class='delete'></button>" +
+            "<strong>JOIN:</strong> Recuerde que después de un JOIN va acompañado del nombre de un tabla, sirve para reunir información de tus dos tablas. \n\
+            Después de un  JOIN puede ir un ON que te permite comparar algún atributo " +
+            "<br/> Ejemplo:select * from Alumno join Robot ON Nombre.id=Robot.id</strong> ;</div>");
 }
 
 function groupbyHandler() {
@@ -199,9 +233,16 @@ function groupbyHandler() {
     }
     sentenciasArray.push("group by");
     tagsSelect.push("attributeGB" + cont7 + "");
-    $("#messageInfo").remove();
 
+    $("#hint").empty();
+    $("#hint").append("<div class='arrow'>&#8674;</div>");
+    $("#hint").append("<div class='notification is-warning'>" +
+            "<button class='delete'></button>" +
+            "<strong>GROUP BY:</strong>  Después de GROUP BY va un atributo. Te ayuda a que el resultado de tu consulta agrupándolos por el atributo colocado" +
+            "<br/> Ejemplo: select nombre from persona <strong>group by</strong> nombre;</div>");
+    $("#messageInfo").remove();
 }
+
 function limpiarTablero() {
     cont = 0;
     cont2 = 0;
@@ -213,6 +254,7 @@ function limpiarTablero() {
     sentenciasArray = [];
     tagsSelect = [];
     $("#boxSQL").empty();
+    $("#messageInfo").remove();
 }
 
 function getQuery() {
