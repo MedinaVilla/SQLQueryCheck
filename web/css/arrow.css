@@ -1,6 +1,6 @@
  .arrow{
       position: relative;
-      font-size: 28px;
+      font-size: 26px;
       text-align: center;
       transform: rotate(90deg);
       animation: bouncearrow 1s infinite;

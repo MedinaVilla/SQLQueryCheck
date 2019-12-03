@@ -24,18 +24,26 @@ function selectHandler() {
     $("#boxSQL").append(" select ");
     $("#boxSQL").append("<select class='select' id='attributeTS" + cont + "' name='attributeTS" + cont + "'></select>");
 
+
     for (var i = 0; i < attributesNoRepetition.length; i++) {
         var o = new Option(attributesNoRepetition[i], attributesNoRepetition[i]);
         $(o).html(attributesNoRepetition[i]);
         $("#attributeTS" + cont).append(o);
         exist = true;
     }
-//    for (var i = 0; i < attributesRepetition.length; i++) {
-//        alert("olaaaa");
-//        $(o).html(attributesRepetition[i]);
-//        $("#attributeTS" + cont).append(o);
-//        exist = true;
-//    }
+    if (attributesRepetition.length >= 1) {
+        for (var k = 0; k < attributesRepetition.length; k++) {
+            for (var i = 0; i < tablas.length; i++) {
+                for (var j = 0; j < tablas[i].atributos[0].length; j++) {
+                    if (tablas[i].atributos[0][j].toString() === attributesRepetition[j]) {
+                        var o = new Option(tablas[i].nombre + "." + attributesRepetition[k], tablas[i].nombre + "." + attributesRepetition[k]);
+                        $(o).html(tablas[i].nombre + "." + attributesRepetition[k]);
+                        $("#attributeTS" + cont).append(o);
+                    }
+                }
+            }
+        }
+    }
 
     var o = new Option("*", "*");
     $(o).html("*");
@@ -66,7 +74,11 @@ function fromHandler() {
         if ($("#attributeTS" + cont).val().toString() !== "*") {
             for (var i = 0; i < tablas.length; i++) {
                 for (var j = 0; j < tablas[i].atributos[0].length; j++) {
-                    if (tablas[i].atributos[0][j].toString() === ($("#attributeTS" + cont).val().toString())) {
+                    var indexDot = $("#attributeTS" + cont).val().toString().indexOf(".");
+                    var indexFinal = $("#attributeTS" + cont).val().toString().length;
+                    if (tablas[i].atributos[0][j].toString() === ($("#attributeTS" + cont).val().toString()) ||
+                            ((tablas[i].atributos[0][j].toString() === ($("#attributeTS" + cont).val().toString().substr(indexDot + 1, indexFinal))) &&
+                                    (tablas[i].nombre.toString() === ($("#attributeTS" + cont).val().toString().substr(0, indexDot))))) {
                         array2.push(tablas[i].nombre.toString());
                     }
                 }
@@ -123,7 +135,7 @@ function whereHandler() {
             "<strong>WHERE:</strong> Recuerda que después WHERE un atributo, el cual, puede ser comparado \n\
             o puedes estar contenido dentro de un select mediante un IN, NOT IN." +
             "<br/> Ejemplo: select nombre from persona <strong> where nombre == 'Jesus'</strong> ;</div>");
-    $("#select").addClass("is-success is-outlined");
+    $("#where").removeClass("is-success is-outlined");
 
     $("#messageInfo").remove();
 }
@@ -152,7 +164,9 @@ function notHandler() {
     $("#hint").append("<div class='notification is-warning'>" +
             "<button class='delete'></button>" +
             "<strong>NOT IN:</strong>Recuerda que después de un NOT IN va una subconsulta la cual inicia con un SELECT." +
-            "<br/> Ejemplo: select nombre from persona <strong> where nombre == 'Jesus'</strong> ;</div>");
+            "<br/> Ejemplo: select nombre from persona <strong> where nombre not IN</strong>(select * from robot); ;</div>");
+    $("#selectT").addClass("is-success is-outlined");
+    $("#not").removeClass("is-success is-outlined");
     $("#messageInfo").remove();
 }
 
@@ -180,6 +194,8 @@ function inHandler() {
             "<button class='delete'></button>" +
             "<strong>IN:</strong> Recuerda que después de un IN va una subconsulta la cual inicia con un SELECT." +
             "<br/> Ejemplo: select nombre from persona where nombre <strong>in</strong>(select * from robot);</strong> ;</div>");
+    $("#selectT").addClass("is-success is-outlined");
+    $("#in").removeClass("is-success is-outlined");
     $("#messageInfo").remove();
 }
 
@@ -195,6 +211,7 @@ function unionHandler() {
             "<button class='delete'></button>" +
             "<strong>UNION:</strong> Recuerda que despues de una UNION, siempre va un SELECT" +
             "<br/> Ejemplo: select nombre from persona <strong>union</strong> select * from robot;</strong> ;</div>");
+    $("#union").removeClass("is-success is-outlined");
     $("#messageInfo").remove();
 }
 
@@ -225,6 +242,8 @@ function joinHandler() {
             "<strong>JOIN:</strong> Recuerde que después de un JOIN va acompañado del nombre de un tabla, sirve para reunir información de tus dos tablas. \n\
             Después de un  JOIN puede ir un ON que te permite comparar algún atributo " +
             "<br/> Ejemplo:select * from Alumno join Robot ON Nombre.id=Robot.id</strong> ;</div>");
+
+    $("#join").removeClass("is-success is-outlined");
 }
 
 function groupbyHandler() {
@@ -247,6 +266,8 @@ function groupbyHandler() {
             "<button class='delete'></button>" +
             "<strong>GROUP BY:</strong>  Después de GROUP BY va un atributo. Te ayuda a que el resultado de tu consulta agrupándolos por el atributo colocado" +
             "<br/> Ejemplo: select nombre from persona <strong>group by</strong> nombre;</div>");
+
+    $("#groupby").removeClass("is-success is-outlined");
     $("#messageInfo").remove();
 }
 
@@ -262,6 +283,7 @@ function limpiarTablero() {
     tagsSelect = [];
     $("#boxSQL").empty();
     $("#messageInfo").remove();
+    $("#closeN").remove();
 }
 
 function getQuery() {
@@ -279,14 +301,25 @@ function getQuery() {
     http.send(params);
     http.onload = function () {
         if (http.responseText.includes("incorrect")) {
+            $("#messageInfo").remove();
             $("#checkSQL").append("<div id='messageInfo' class='notification is-danger'>" +
                     "Oh no! Tu sentencia SQL es incorrecta. Venga, tu puedes!" +
                     "</div>");
-        } else
+        } else {
+            $("#messageInfo").remove();
             $("#checkSQL").append("<div id='messageInfo' class='notification is-success'>" +
                     "Genial! Tu sentencia SQL correcta. Sigue asi!" +
                     "</div>");
+        }
     };
+}
+
+function deleteTables() {
+    var url = window.location.href;
+    if (url.indexOf('?') === -1) {
+        url += '?r=1';
+    }
+    window.location.href = url;
 }
 
 function cerrarP() {
@@ -294,3 +327,12 @@ function cerrarP() {
     sentenciasArray.push("*)");
     $("#closeN").remove();
 }
+
+$(window).bind('beforeunload', function () {
+    alert("sasa");
+    if (sessionStorage.getItem('beenhere') === '1') {
+        window.location = "http://localhost:8081/SQLQueryProject/";
+    }
+    sessionStorage.setItem('beenhere', '1');
+
+});

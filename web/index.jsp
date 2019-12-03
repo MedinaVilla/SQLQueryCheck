@@ -11,13 +11,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="./css/bulma.css" type="text/css"/>
-        <link rel="stylesheet" href="./css/arrow.css?4" type="text/css"/>
+        <link rel="stylesheet" href="./css/arrow.css?5" type="text/css"/>
         <link rel="icon" href="img/sql.jpg" type="image/icon type">
         <script src="./js/jquery.min.js"></script>
-        <script type="text/javascript" src="./js/tableR.js?3"></script>
-        <script type="text/javascript" src="./js/commands.js?24"></script>
+        <script type="text/javascript" src="./js/tableR.js?4"></script>
+        <script type="text/javascript" src="./js/commands.js?29"></script>
         <script type="text/javascript" src="./js/attribute.js?3"></script>
-        <script type="text/javascript" src="./js/check.js?4"></script>
     </head>
     <body>
         <section class="hero is-primary">
@@ -33,6 +32,7 @@
             </div>
         </section>
         <hr/>
+
         <div class="columns">
             <aside class="column is-one-fifth">
                 <div class="menu">
@@ -83,7 +83,14 @@
                 <div id="checkSQL" name="checkSQL"></div>
             </div>
             <div class="column is-one-fifth">
-                <center><p class='subtitle'>Tablas</p></center>
+                <div class="columns">
+                    <div class="column is-three-quarters">
+                        <center><p class='subtitle has-text-weight-semibold'>Tablas</p></center>
+                    </div>
+                    <div class="column is-one-quarter">
+                        <a onclick="deleteTables();" class="delete is-medium"></a>
+                    </div>
+                </div>
                 <hr/>
                 <section id="tables" name="tables" class="box"></section>
             </div>
@@ -127,7 +134,8 @@
         <!-- Bienvenida -->
         <%
             String messageS = request.getParameter("status");
-            if (messageS == null) {
+            String r = request.getParameter("r");
+            if (messageS == null && r == null) {
                 out.println("<div id='bienvenida' class='modal'>"
                         + "<div class='modal-background'></div>"
                         + "<div class='modal-content'>"
